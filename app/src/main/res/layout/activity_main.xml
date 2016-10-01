@@ -29,20 +29,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nickname_set"
         android:id="@+id/server_set_label"
-        android:text="Server:"
-        />
+        android:text="Server:"/>
     <EditText
         android:id="@+id/server_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/server_set_label"
-        android:text="@string/default_server"
-        />
+        android:text="@string/default_server"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/server_set"
-        android:text="Play"
-        />
+        android:onClick="startGame"
+        android:text="Play"/>
 </RelativeLayout>

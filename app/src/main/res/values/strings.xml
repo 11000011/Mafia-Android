@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Mafia</string>
     <string name="nickname">Please choose a nick</string>
-    <string name="default_server">ws://yashsriv.org:7000</string>
+    <string name="default_server">ws://192.168.0.51:7000</string>
 </resources>
