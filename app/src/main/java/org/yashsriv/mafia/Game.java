@@ -19,6 +19,10 @@ public class Game {
         WAIT, MAFIA, DETECTIVE, ANON, DISCUSS, OPEN
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     private String username;
 
     private TYPE type;
@@ -52,6 +56,8 @@ public class Game {
     public Hashtable<String, String> getVoteState() {
         return voteState;
     }
+
+    public void clearVoteState() { voteState = new Hashtable<String, String>(); }
 
     private ArrayList<String> teamNames;
 
