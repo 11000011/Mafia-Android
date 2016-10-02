@@ -264,10 +264,16 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    public void showDetectiveToast(String username, Boolean wasMafia) {
-        CharSequence text = username + " is " + (wasMafia ? "" : "not ") + "a mafia member.";
-        int duration = Toast.LENGTH_LONG;
-        Toast.makeText(this, text, duration).show();
+    public void showDetectiveToast(final String username, final Boolean wasMafia) {
+        final Context c =this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CharSequence text = username + " is " + (wasMafia ? "" : "not ") + "a mafia member.";
+                int duration = Toast.LENGTH_LONG;
+                Toast.makeText(c, text, duration).show();
+            }
+        });
     }
 
     public void initActivity() {
