@@ -83,13 +83,16 @@ public class GameActivity extends AppCompatActivity {
             switch (message.split(":")[1]) {
                 case "Victim":
                     game.setType(Game.TYPE.VICTIM);
+                    toast("You are a normal citizen");
                     break;
                 case "Mafia":
                     game.setType(Game.TYPE.MAFIA);
+                    toast("You are a mafia member");
                     wc.send("#LOADED_MAFIA_JS");
                     break;
                 case "Detective":
                     game.setType(Game.TYPE.DETECTIVE);
+                    toast("You are a responsible detective");
                     wc.send("#LOADED_DETECTIVE_JS");
                     break;
             }
@@ -131,12 +134,20 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (message.matches("#VOTE_ANON") || message.matches("#VOTE_OPEN")) {
+            toast("Voting Round!!!!!");
             startVotingFragment();
         }
 
         if (message.matches("#DISCUSSION:.*")) {
+            toast("Discussion Round");
             String users[] = message.split("#DISCUSSION:")[1].split(",");
             startDiscussionFragment(users[0], users[1]);  // Highest, Second Highest
+        }
+
+        if (message.matches("#WIN:.*")) {
+            String winners = message.split(":")[1];
+            toast(winners + " WIN!!!");
+            finish();
         }
 
     }
@@ -151,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (message.matches("#DETECTIVE_VOTE")) {
-            System.out.println("Inside if block of detective vote");
+            toast("Detective Voting Round");
             startVotingFragment();
         }
 
@@ -172,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (message.matches("#MAFIA_VOTE")) {
+            toast("Mafia voting round");
             startVotingFragment();
         }
 
@@ -207,7 +219,6 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void onClose(int code, String reason, boolean remote) {
-            // TODO: Display Toast
             toast("Closed connection \t" + code + "\t" + reason);
         }
 
@@ -228,7 +239,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void showToast(final String username) {
-        // TODO: make this work
         final Context c = this;
         runOnUiThread(new Runnable() {
             @Override
@@ -242,7 +252,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void showToast(final String username, final Boolean wasMafia) {
-        // TODO: make this work
         final Context c = this;
         runOnUiThread(new Runnable() {
             @Override
@@ -256,7 +265,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void showDetectiveToast(String username, Boolean wasMafia) {
-        // TODO: make this work
         CharSequence text = username + " is " + (wasMafia ? "" : "not ") + "a mafia member.";
         int duration = Toast.LENGTH_LONG;
         Toast.makeText(this, text, duration).show();
@@ -299,6 +307,7 @@ public class GameActivity extends AppCompatActivity {
                         // Is the button now checked?
                         boolean checked = ((RadioButton) v).isChecked();
                         if (checked) {
+                            System.out.println("Vote Sent - " + ((RadioButton) v).getText().toString());
                             wc.send("#VOTE:" + ((RadioButton) v).getText());
                         }
                     }
@@ -349,11 +358,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void updateVotingSystem(String voter, String votee) {
 
-        Context context = this;
-        CharSequence text = voter + " voted to eliminate " + votee;
-        int duration = Toast.LENGTH_LONG;
-        Toast.makeText(context, text, duration).show();
-        // TODO: update other user's choices
         String message = "";
         Enumeration<String> en = game.getUsers().keys();
         while (en.hasMoreElements()) {
@@ -382,8 +386,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void startDiscussionFragment(String user1, String user2) {
-        // TODO: Display Discussion Rules and button
-        // TODO: Send #DONE_DISCUSSION on button click
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.discuss);
 
         final TextView discussion = new TextView(this);
